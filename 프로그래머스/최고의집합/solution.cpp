@@ -6,11 +6,11 @@ using namespace std;
 vector<int> solution(int n, int s) {
     int a, b;
     a = s / n;
+    if (a == 0)
+        return {-1};
     b = s % n;
     
     vector<int> ans(n, a);
-    if (a == 0)
-        return vector<int>(1, -1);
     for (int i = 0; i < b; ++i)
         ++ans[n - 1 - i];
     return ans;
