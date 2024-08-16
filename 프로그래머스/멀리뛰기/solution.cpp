@@ -1,18 +1,18 @@
 #include <string>
 #include <vector>
 
+#define MOD 1234567
+
 using namespace std;
 
-vector<long long> dp;
-
 long long solution(int n) {
-    long long mod = 1234567;
-    dp.resize(n + 1);
-    dp[1] = 1;
-    dp[2] = 2;
+    vector<long long> dp(n + 1);
     
-    for (int i = 3; i <= n; ++i)
-        dp[i] = (dp[i - 1] + dp [i - 2]) % mod;
+    dp[0] = 1;
+    dp[1] = 1;
+    
+    for (int i = 2; i <= n; ++i)
+        dp[i] = (dp[i - 1] + dp [i - 2]) % MOD;
     
     return dp[n];
 }
