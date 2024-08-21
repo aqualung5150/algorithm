@@ -114,20 +114,19 @@ int solution(vector<vector<int>> game_board, vector<vector<int>> table) {
     int ans = 0;
     for (int i = 0; i < boards.size(); ++i) {
         for (int j = 0; j < 4; ++j) {
-            bool flag = false;
+            int matched = 0;
             for (int k = 0; k < puzzles[j].size(); ++k) {
                 if (visited[k])
                     continue;
                 
-                int matched = compareShape(boards[i], puzzles[j][k]);
+                matched = compareShape(boards[i], puzzles[j][k]);
                 if (matched) {
                     ans += matched;
                     visited[k] = true;
-                    flag = true;
                     break;
                 }
             }
-            if (flag)
+            if (matched)
                 break;
         }
     }
