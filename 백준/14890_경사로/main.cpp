@@ -32,6 +32,38 @@ bool slope(int x, int y) {
     return true;
 }
 
+int getPath() {
+    int ret = 0;
+
+    for (int i = 0; i < N; ++i) {
+        bool valid = true;
+
+        for (int j = 1; j < N; ++j) {
+            if (board[i][j] == board[i][j - 1])
+                continue;
+
+            if (abs(board[i][j] - board[i][j - 1]) >  1) {
+                valid = false;
+                break;
+            }
+
+            int x = j;
+            if (board[i][j] > board[i][j - 1])
+                x = j - L;
+
+            if (!slope(x, i)) {
+                valid = false;
+                break;
+            }
+        }
+
+        if (valid)
+            ++ret;
+    }
+
+    return ret;
+}
+
 int main() {
     ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
 
@@ -43,72 +75,12 @@ int main() {
         for (int j = 0; j < N; ++j)
             cin >> board[i][j];
 
-    int ans = 0;
-
-    // horizon
-    for (int i = 0; i < N; ++i) {
-        bool valid = true;
-
-        for (int j = 1; j < N; ++j) {
-            if (board[i][j] == board[i][j - 1])
-                continue;
-
-            if (abs(board[i][j] - board[i][j - 1]) >  1) {
-                valid = false;
-                break;
-            }
-
-            if (board[i][j] > board[i][j - 1]) {
-                if (!slope(j - L, i)) {
-                    valid = false;
-                    break;
-                }
-            }
-            if (board[i][j] < board[i][j - 1]) {
-                if (!slope(j, i)) {
-                    valid = false;
-                    break;
-                }
-            }
-        }
-
-        if (valid)
-            ++ans;
-    }
-
+    int ans = getPath(); // horizon
+   
     board = rotateBoard();
     fill(visited.begin(), visited.end(), vector<bool>(N, false));
 
-    // vertical
-    for (int i = 0; i < N; ++i) {
-        bool valid = true;
-
-        for (int j = 1; j < N; ++j) {
-            if (board[i][j] == board[i][j - 1])
-                continue;
-
-            if (abs(board[i][j] - board[i][j - 1]) >  1) {
-                valid = false;
-                break;
-            }
-
-            if (board[i][j] > board[i][j - 1]) {
-                if (!slope(j - L, i)) {
-                    valid = false;
-                    break;
-                }
-            }
-            if (board[i][j] < board[i][j - 1]) {
-                if (!slope(j, i)) {
-                    valid = false;
-                    break;
-                }
-            }
-        }
-
-        if (valid)
-            ++ans;
-    }
+    ans += getPath(); // vertical
     
     cout << ans;
 
