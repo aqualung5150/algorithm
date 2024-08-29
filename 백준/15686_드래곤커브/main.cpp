@@ -12,13 +12,9 @@ void draw(int x, int y, int d, int g) {
     vector<int> dir;
     dir.push_back(d);
 
-    for (int i = 1; i <= g; ++i) {
-        int j = dir.size() - 1;
-        while (j >= 0) {
+    for (int i = 1; i <= g; ++i)
+        for (int j = dir.size() - 1; j >= 0; --j)
             dir.push_back((dir[j] + 1) % 4);
-            --j;
-        }
-    }
 
     board[y][x] = true;
     for (int d : dir) {
