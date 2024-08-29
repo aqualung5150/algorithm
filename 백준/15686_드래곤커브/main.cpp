@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <stack>
 
 using namespace std;
 
@@ -10,22 +9,15 @@ int N;
 vector<vector<bool>> board(101, vector<bool>(101));
 
 void draw(int x, int y, int d, int g) {
-    stack<int> stk;
-    stk.push(d);
+    vector<int> dir;
+    dir.push_back(d);
 
     for (int i = 1; i <= g; ++i) {
-        stack<int> temp = stk;
-        while (!stk.empty()) {
-            temp.push((stk.top() + 1) % 4);
-            stk.pop();
+        int j = dir.size() - 1;
+        while (j >= 0) {
+            dir.push_back((dir[j] + 1) % 4);
+            --j;
         }
-        stk = temp;
-    }
-
-    vector<int> dir(stk.size());
-    for (int i = dir.size() - 1; i >= 0; --i) {
-        dir[i] = stk.top();
-        stk.pop();
     }
 
     board[y][x] = true;
