@@ -23,17 +23,9 @@ void removeScent() {
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             if (scent[i][j]) {
-                int s = board[i][j];
-                int x = shark[s].x;
-                int y = shark[s].y;
-
                 --scent[i][j];
-                if (!scent[i][j]) {
-                    // 상어가 방금 이동한 곳이 [i][j]라면 board[i][j]를 0으로 만들면 안됨.
-                    if (x == j && y == i)
-                        continue;
+                if (!scent[i][j])
                     board[i][j] = 0;
-                }
             }
         }
     }
@@ -48,6 +40,8 @@ void addScent() {
             continue;
 
         scent[y][x] = k;
+        // removeScent()에서 이동한 위치(board[y][x])가 지워졌을 수 있음 (line.28).
+        board[y][x] = i;
     }
 }
 
