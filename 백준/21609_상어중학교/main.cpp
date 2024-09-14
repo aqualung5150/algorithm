@@ -64,7 +64,6 @@ void bfs(vector<vector<bool>> &visited, int sx, int sy) {
 }
 
 void setBlockGroup() {
-    // blockGroup.clear();
     biggest.clear();
     biggestRainbow = 0;
     vector<vector<bool>> visited(N, vector<bool>(N));
