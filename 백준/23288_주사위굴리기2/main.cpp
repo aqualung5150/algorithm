@@ -130,31 +130,9 @@ public:
         horizon[1] = vertical[1];
     }
 
-    // int top() {
-    //     return horizon[1];
-    // }
-
-    // int bottom() {
-    //     return bottomNumber;
-    // }
-
     int getScore() {
         return score;
     }
-
-    // void print() {
-    //     cout << "\n";
-    //     for (int i = 0; i < 3; ++i) {
-    //         cout << horizon[i];
-    //     }
-    //     cout << "\n";
-    //     for (int j = 0; j < 3; ++j) {
-    //         cout << vertical[j];
-    //     }
-    //     cout << "\n";
-    //     cout << bottomNumber << "\n";
-    //     cout << direction << " " << point.x << "," << point.y << "\n";
-    // }
 };
 
 void init() {
@@ -176,7 +154,6 @@ int main() {
         dice.go();
         dice.setDirection();
         dice.addScore();
-        // dice.print();
     }
 
     cout << dice.getScore();
