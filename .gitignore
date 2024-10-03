@@ -5,3 +5,5 @@ main.yml
 info.plist
 
 .DS_Store
+
+*.class
