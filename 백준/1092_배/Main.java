@@ -4,17 +4,17 @@ import java.io.*;
 public class Main {
     private static int N;
     private static int M;
-    private static Integer[] crains;
+    private static Integer[] cranes;
     private static Integer[] containers;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        //crain
+        //crane
         N = Integer.parseInt(br.readLine());
-        crains = new Integer[N];
+        cranes = new Integer[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; ++i) {
-            crains[i] = Integer.parseInt(st.nextToken());
+            cranes[i] = Integer.parseInt(st.nextToken());
         }
         //container
         M = Integer.parseInt(br.readLine());
@@ -24,10 +24,10 @@ public class Main {
             containers[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(crains, Collections.reverseOrder());
+        Arrays.sort(cranes, Collections.reverseOrder());
         Arrays.sort(containers, Collections.reverseOrder());
 
-        if (crains[0] < containers[0]) {
+        if (cranes[0] < containers[0]) {
             System.out.print(-1);
             return;
         }
@@ -38,9 +38,9 @@ public class Main {
         while (checked < M) {
             ++answer;
 
-            for (int i = 0; i < crains.length; ++i) {
+            for (int i = 0; i < cranes.length; ++i) {
                 int j = 0;
-                while (j < M && (containers[j] > crains[i] || visited[j])) {
+                while (j < M && (containers[j] > cranes[i] || visited[j])) {
                     ++j;
                 }
 
