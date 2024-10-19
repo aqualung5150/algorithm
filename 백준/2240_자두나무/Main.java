@@ -21,6 +21,7 @@ public class Main {
             arr[i] = Integer.parseInt(br.readLine());
         }
 
+        // i: arr의 인덱스, j: 움직인 횟수
         for (int i = 1; i <= T; ++i) {
             for (int j = 0; j <= W && j <= i; ++j) {
                 if (j == 0) {
@@ -28,7 +29,7 @@ public class Main {
                 } else {
                     dp[j][i] = Math.max(dp[j - 1][i - 1], dp[j][i - 1]);
                 }
-
+                // 움직인 횟수로 현재 위치가 1번인지 2번인지 알 수 있음
                 int pos = j % 2 == 0 ? 1 : 2;
                 if (pos == arr[i]) {
                     dp[j][i]++;
