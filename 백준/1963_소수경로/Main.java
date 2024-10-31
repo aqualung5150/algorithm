@@ -33,7 +33,7 @@ public class Main {
                 continue;
             }
 
-            for (int j = i + i; j < 10000; j += i) {
+            for (int j = i * i; j < 10000; j += i) {
                 prime[j] = false;
             }
         }
