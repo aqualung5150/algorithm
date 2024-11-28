@@ -27,40 +27,26 @@ public class Main {
                 parent[i] = i;
             }
 
-            Set<Integer> cycleRoot = new HashSet<>();
             for (int i = 0; i < m; ++i) {
                 int a, b;
                 st = new StringTokenizer(br.readLine());
                 a = Integer.parseInt(st.nextToken());
                 b = Integer.parseInt(st.nextToken());
 
-                int from = findRoot(a);
-                int to = findRoot(b);
-                
-                if (from == to) {
-                    cycleRoot.add(to);
-                } else {
-                    
-                    if (cycleRoot.contains(from) || cycleRoot.contains(to)) {
-                        cycleRoot.add(from);
-                        cycleRoot.add(to);
-                    }
-
-                    unionRoot(a, b);
-                }
+                unionRoot(a, b);
             }
 
-            int answer = 0;
+            
+            Set<Integer> group = new HashSet<>();
             for (int i = 1; i <= n; ++i) {
                 int root = findRoot(i);
 
-                if (cycleRoot.contains(root)) {
-                    continue;
+                if (root != 0) {
+                    group.add(root);
                 }
-                answer++;
-                cycleRoot.add(root);
             }
 
+            int answer = group.size();
             if (answer == 0) {
                 System.out.println("Case " + T + ": No trees.");
             } else if (answer == 1) {
@@ -87,8 +73,12 @@ public class Main {
         x = findRoot(x);
         y = findRoot(y);
 
-        if (x != y) {
+        if (x == y) {
+            parent[x] = 0;
+        } else if (x < y) {
             parent[y] = x;
+        } else {
+            parent[x] = y;
         }
     }
 
