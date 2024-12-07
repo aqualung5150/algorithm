@@ -9,7 +9,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         init();
-
         System.out.print(bfs());
     }
 
@@ -62,35 +61,24 @@ public class Main {
 
     private static String getNextString(String str, int direction) {
 
-        StringBuilder sb = new StringBuilder(str);
         int zeroIdx = str.indexOf('0');
+        int targetIdx = -1;
 
-
-        //right
-        int targetIdx = zeroIdx + 1;
         if (direction == 0 && zeroIdx % 3 != 2) {
-            return stringSwap(str, zeroIdx, targetIdx);
+            targetIdx = zeroIdx + 1;
+        } else if (direction == 1 && zeroIdx % 3 != 0) {
+            targetIdx = zeroIdx - 1;
+        } else if (direction == 3 && zeroIdx - 3 >= 0) {
+            targetIdx = zeroIdx - 3;
+        } else if (direction == 2 && zeroIdx + 3 < 9) {
+            targetIdx = zeroIdx + 3;
         }
 
-        //left
-        targetIdx = zeroIdx - 1;
-        if (direction == 1 && zeroIdx % 3 != 0) {
-            return stringSwap(str, zeroIdx, targetIdx);
+        if (targetIdx == -1) {
+            return null;
         }
 
-        //up
-        targetIdx = zeroIdx - 3;
-        if (direction == 3 && targetIdx >= 0) {
-            return stringSwap(str, zeroIdx, targetIdx);
-        }
-
-        //down
-        targetIdx = zeroIdx + 3;
-        if (direction == 2 && zeroIdx + 3 < 9) {
-            return stringSwap(str, zeroIdx, targetIdx);
-        }
-
-        return null;        
+        return stringSwap(str, zeroIdx, targetIdx);
     }
 
     private static String stringSwap(String str, int idx1, int idx2) {
