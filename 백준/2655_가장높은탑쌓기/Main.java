@@ -19,15 +19,14 @@ public class Main {
             heights[i] = blocks[i].height;
             for (int j = 0; j < i; ++j) {
                 if (blocks[j].weight > blocks[i].weight) {
-                    if (heights[i] < heights[j] + blocks[i].height) {
-                        heights[i] = heights[j] + blocks[i].height;
-                    }
+                    heights[i] = Math.max(heights[i], heights[j] + blocks[i].height);
                 }
             }
             if (heights[i] > maxHeight) {
                 maxHeight = heights[i];
                 maxHeightIdx = i;
             }
+            
         }
 
         List<Integer> result = new ArrayList<>();
@@ -43,7 +42,7 @@ public class Main {
             System.out.println(b);
         }
     }
-    
+
     private static void init() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
