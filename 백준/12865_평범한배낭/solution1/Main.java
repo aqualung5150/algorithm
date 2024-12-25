@@ -32,13 +32,6 @@ public class Main {
 
         br.close();
 
-        // for (int i = 1; i <= N; ++i) {
-        //     for (int j = 1; j <= K; ++j) {
-        //         System.out.print(dp[i][j] + " ");
-        //     }
-        //     System.out.println();
-        // }
-
         System.out.print(dp[N][K]);
     }
 }
