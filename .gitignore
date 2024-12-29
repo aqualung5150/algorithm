@@ -7,3 +7,5 @@ info.plist
 .DS_Store
 
 *.class
+
+/Main.java
