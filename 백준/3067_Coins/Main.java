@@ -4,6 +4,7 @@ import java.io.*;
 public class Main {
 
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static StringTokenizer st;
 
     private static int T, N, M;
     private static int[] coins;
@@ -18,9 +19,10 @@ public class Main {
             init();
 
             dp[0] = 1;
-            for (int coin : coins) {
-                for (int i = coin; i <= M; ++i) {
-                    dp[i] += dp[i - coin];
+            for (int i = 0; i < N; ++i) {
+                int coin = Integer.parseInt(st.nextToken());
+                for (int j = coin; j <= M; ++j) {
+                    dp[j] += dp[j - coin];
                 }
             }
 
@@ -35,11 +37,8 @@ public class Main {
         N = Integer.parseInt(br.readLine());
         coins = new int[N];
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; ++i) {
-            coins[i] = Integer.parseInt(st.nextToken());
-        }
-        
+        st = new StringTokenizer(br.readLine());
+ 
         M = Integer.parseInt(br.readLine());
         dp = new int[M + 1];
     }
