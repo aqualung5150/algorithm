@@ -4,23 +4,22 @@ import java.io.*;
 public class Main {
 
     private static int N;
-    private static Line[] lines;
-    private static Line[] dp;
+    private static int[] lines;
+    private static List<Integer> validLines = new ArrayList<>();
+    private static int[] dp;
     private static int[] count;
-    private static List<Integer> removed = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
 
         init();
-
-        Arrays.sort(lines, (o1, o2) -> o1.A - o2.A);
-
-        dp[0] = lines[0];
-        count[0] = 1;
+        
+        int firstLineIdx = validLines.get(0);
+        dp[0] = lines[firstLineIdx];
+        count[firstLineIdx] = 1;
         int idx = 0;
-        for (int i = 1; i < N; ++i) {
+        for (int i : validLines) {
 
-            if (lines[i].B > dp[idx].B) {
+            if (lines[i] > dp[idx]) {
                 dp[++idx] = lines[i];
                 count[i] = idx + 1;
             } else {
@@ -30,30 +29,34 @@ public class Main {
             }
         }
 
+        Stack<Integer> removed = new Stack<>();
         int maxCount = idx + 1;
         for (int i = N - 1; i >= 0; --i) {
-            if (count[i] != maxCount) {
-                removed.add(lines[i].A);
+            int cur = validLines.get(i);
+
+            if (count[cur] != maxCount) {
+                removed.push(cur);
             } else {
                 --maxCount;
             }
         }
-        
-        Collections.sort(removed);
 
-        System.out.println(removed.size());
-        for (int r : removed) {
-            System.out.println(r);
+        //print
+        StringBuilder sb = new StringBuilder();
+        sb.append(removed.size() + "\n");
+        while (!removed.isEmpty()) {
+            sb.append(removed.pop() + "\n");
         }
+        System.out.print(sb);
     }
 
     private static void init() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         N = Integer.parseInt(br.readLine());
-        lines = new Line[N];
-        dp = new Line[N];
-        count = new int[N];
+        lines = new int[500001];
+        dp = new int[N];
+        count = new int[500001];
 
         for (int i = 0; i < N; ++i) {
 
@@ -62,18 +65,24 @@ public class Main {
             int A = Integer.parseInt(st.nextToken());
             int B = Integer.parseInt(st.nextToken());
 
-            lines[i] = new Line(A, B);
+            lines[A] = B;
+        }
+
+        for (int i = 1; i <= 500000; ++i) {
+            if (lines[i] != 0) {
+                validLines.add(i);
+            }
         }
 
         br.close();
     }
 
-    private static int lowerBound(Line target, int left, int right) {
+    private static int lowerBound(int target, int left, int right) {
 
         while (left < right) {
             int mid = (left + right) / 2;
 
-            if (dp[mid].B < target.B) {
+            if (dp[mid] < target) {
                 left = mid + 1;
             } else {
                 right = mid;
@@ -81,15 +90,5 @@ public class Main {
         }
 
         return right;
-    }
-
-    static class Line {
-        public int A;
-        public int B;
-
-        public Line(int A, int B) {
-            this.A = A;
-            this.B = B;
-        }
     }
 }
