@@ -8,7 +8,7 @@ public class Main {
 
     private static int N, M, K;
     private static int[][] board;
-    private static int[][][] dist;
+    private static int[][] brokenCnt;
 
     public static void main(String[] args) throws IOException {
 
@@ -25,7 +25,10 @@ public class Main {
         K = Integer.parseInt(st.nextToken());
 
         board = new int[N][M];
-        dist = new int[K + 1][N][M];
+        brokenCnt = new int[N][M];
+        for (int i = 0; i < N; ++i) {
+            Arrays.fill(brokenCnt[i], 11);
+        }
 
         for (int i = 0; i < N; ++i) {
             String read = br.readLine();
@@ -40,15 +43,15 @@ public class Main {
     private static void bfs() {
 
         Queue<Position> q = new LinkedList<>();
-        q.offer(new Position(0, 0, 0));
-        dist[0][0][0] = 1;
+        q.offer(new Position(0, 0, 1));
+        brokenCnt[0][0] = 0;
 
         while (!q.isEmpty()) {
             Position here = q.poll();
             int x = here.x;
             int y = here.y;
-            int broken = here.broken;
-            int curDist = dist[broken][y][x];
+            int curDist = here.dist;
+            int broken = brokenCnt[y][x];
 
             if (x == M - 1 && y == N - 1) {
                 System.out.print(curDist);
@@ -64,16 +67,16 @@ public class Main {
                 }
 
                 int nextBroken = broken;
-                if (board[ny][nx] == 1) {
+                if(board[ny][nx] == 1) {
                     ++nextBroken;
                 }
 
-                if (nextBroken > K || dist[nextBroken][ny][nx] != 0) {
+                if (nextBroken > K || nextBroken >= brokenCnt[ny][nx]) {
                     continue;
                 }
 
-                q.offer(new Position(nx, ny, nextBroken));
-                dist[nextBroken][ny][nx] = curDist + 1;
+                q.offer(new Position(nx, ny, curDist + 1));
+                brokenCnt[ny][nx] = nextBroken;
             }
         }
 
@@ -83,12 +86,12 @@ public class Main {
     static class Position {
         public int x;
         public int y;
-        public int broken;
+        public int dist;
 
-        public Position(int x, int y, int broken) {
+        public Position(int x, int y, int dist) {
             this.x = x;
             this.y = y;
-            this.broken = broken;
+            this.dist = dist;
         }
     }
 }
