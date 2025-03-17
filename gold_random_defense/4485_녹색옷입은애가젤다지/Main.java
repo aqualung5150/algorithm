@@ -17,8 +17,11 @@ public class Main {
 
         int T = 1;
         while (init()) {
-            sb.append("Problem ").append(T).append(": ");
-            bfs();
+            sb.append("Problem ")
+                .append(T)
+                .append(": ")
+                .append(bfs())
+                .append("\n");
             ++T;
         }
 
@@ -47,7 +50,7 @@ public class Main {
         return true;
     }
 
-    private static void bfs() {
+    private static int bfs() {
 
         int[][] dist = new int[N][N];
         for (int i = 0; i < N; ++i) {
@@ -65,8 +68,7 @@ public class Main {
             int curDist = here.dist;
 
             if (x == N - 1 && y == N - 1) {
-                sb.append(curDist).append('\n');
-                return;
+                return curDist;
             }
 
             if (curDist > dist[y][x]) {
@@ -91,6 +93,8 @@ public class Main {
                 dist[ny][nx] = nextDist;
             }
         }
+
+        return -1;
     }
 
     static class Pos implements Comparable<Pos> {
