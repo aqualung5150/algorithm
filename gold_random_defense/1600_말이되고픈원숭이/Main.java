@@ -45,7 +45,7 @@ public class Main {
 
     private static void bfs() {
 
-        Queue<Pos> q = new LinkedList<>();
+        Queue<Pos> q = new ArrayDeque<>();
         q.offer(new Pos(0, 0, 0));
         dist[0][0][0] = 0;
 
@@ -70,21 +70,14 @@ public class Main {
                     dist[k][ny][nx] = curDist + 1;
                 }
 
-                nx = x + dx[i] * 2;
-                ny = y + dy[i] * 2;
+                for (int j = 1; j <= 3; j += 2) {
+                    int nnx = nx + dx[i] + dx[(i + j) % 4];
+                    int nny = ny + dy[i] + dy[(i + j) % 4];
 
-                int lnx = nx + dx[(i + 1) % 4];
-                int lny = ny + dy[(i + 1) % 4];
-                if (!(k >= K || lnx < 0 || lnx >= W || lny < 0 || lny >= H || board[lny][lnx] || dist[k + 1][lny][lnx] != INF)) {
-                    q.offer(new Pos(lnx, lny, k + 1));
-                    dist[k + 1][lny][lnx] = curDist + 1;
-                }
-
-                int rnx = nx + dx[(i + 3) % 4];
-                int rny = ny + dy[(i + 3) % 4];
-                if (!(k >= K || rnx < 0 || rnx >= W || rny < 0 || rny >= H || board[rny][rnx] || dist[k + 1][rny][rnx] != INF)) {
-                    q.offer(new Pos(rnx, rny, k + 1));
-                    dist[k + 1][rny][rnx] = curDist + 1;
+                    if (!(k >= K || nnx < 0 || nnx >= W || nny < 0 || nny >= H || board[nny][nnx] || dist[k + 1][nny][nnx] != INF)) {
+                        q.offer(new Pos(nnx, nny, k + 1));
+                        dist[k + 1][nny][nnx] = curDist + 1;
+                    }
                 }
             }
         }
