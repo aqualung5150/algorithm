@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Main {
 
-    private static int N, M;
+    private static int N;
     private static int[] arr, dp, dp2;
 
     public static void main(String[] args) throws IOException {
