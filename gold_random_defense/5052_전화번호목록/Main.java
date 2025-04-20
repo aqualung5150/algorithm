@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Main {
 
-    private static int t, n;;
+    private static int t, n;
 
     public static void main(String[] args) throws IOException {
 
